@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace SchoolManagement
 {
@@ -9,10 +8,10 @@ namespace SchoolManagement
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.min.js"));
+                        "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery-ui").Include(
-                        "~/Scripts/jquery-ui-{version}.min.js"));
+                        "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -29,6 +28,11 @@ namespace SchoolManagement
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/themes/base/autocomplete.css"));
+
+            bundles.Add(new StyleBundle("~/Content/jqueryui").Include(
+                "~/Content/themes/base/all.css",
+                "~/Content/themes/base/autocomplete.css",
+                "~/Content/themes/base/datepicker.css"));
         }
     }
 }
