@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SchoolManagement.Models;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using SchoolManagement.Models;
 
 namespace SchoolManagement.Controllers
 {
@@ -64,6 +62,26 @@ namespace SchoolManagement.Controllers
             ViewBag.StudentID = new SelectList(db.Students, "StudentID", "LastName", enrollment.StudentID);
             ViewBag.LecturerId = new SelectList(db.Lecturers, "LecturerId", "FirstName", enrollment.LecturerId);
             return View(enrollment);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> AddStudent([Bind(Include = "CourseID,StudentID")] Enrollment enrollment)
+        {
+            try
+            {
+                var isEnrolled = db.Enrollments.Any(q => q.CourseID == enrollment.CourseID && q.StudentID == enrollment.StudentID);
+                if (ModelState.IsValid && !isEnrolled)
+                {
+                    db.Enrollments.Add(enrollment);
+                    await db.SaveChangesAsync();
+                    return Json(new { IsSuccess = true, Message = "Student added successfully" }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { IsSuccess = false, Message = "Student is already enrolled" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new { IsSuccess = false, Message = "Well, that's funny.... please contact your administrator" }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         // GET: Enrollments/Edit/5

@@ -14,7 +14,7 @@ namespace SchoolManagement.Models
         [Required, StringLength(50), Display(Name = "First Name")]
         public string FirstName { get; set; }
 
-        [Required, StringLength(50), Display(Name = "Last Name")]
+        [StringLength(50), Display(Name = "Middle Name")]
         public string MiddleName { get; set; }
 
         [Display(Name = "Date of Birth")]
